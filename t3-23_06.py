@@ -104,7 +104,7 @@ sucesso = False
 animacao_t = 1.0
 estrela_t = 0.0
 exec_stack = []
-scroll_offset = 0  # Scroll para o programa
+scroll_offset = 0 
 
 # Layout
 PAL_X1, PAL_X2 = 0, 340
@@ -115,7 +115,7 @@ PROG_X1, PROG_X2 = 750, 1100
 # Área de topo (título + descrição + conceito + dica + msg)
 # Reservamos 160 px no topo da região central
 TOPO_H = 160
-TOPO_Y = H - TOPO_H        # y onde começa o topo (em coords OpenGL: baixo→cima)
+TOPO_Y = H - TOPO_H     
 GRADE_Y1 = 60
 # A grade ocupa de GRADE_Y1 até TOPO_Y
 # Topo ocupa de TOPO_Y até H
@@ -253,7 +253,7 @@ def desenhar_paleta(fase):
     blocos=fase["blocos"]
     BW,BH=300,44; BX=20
     # O painel de blocos começa logo abaixo do topo da grade
-    # e termina acima dos botões (que ficam em y=10..120)
+    # e termina acima dos botões
     BY_start = TOPO_Y - 15
 
     retangulo(PAL_X1,0,PAL_X2,H,"painel_esq",raio=0)
@@ -281,9 +281,9 @@ def desenhar_paleta(fase):
         borda_ret(bx,by,bw,bh,"branco",1)
         txt(bx+12,by+bh//2+6,label,"branco")
 
-# Programa (direita) COM SCROLL 
+# Programa (direita) 
 _prog_rects=[]
-PROG_SCROLL_AREA = (PROG_X1, 105, PROG_X2-PROG_X1, H-220)  # Área visível do programa
+PROG_SCROLL_AREA = (PROG_X1, 105, PROG_X2-PROG_X1, H-220)  
 
 def desenhar_programa(fase):
     global _prog_rects, scroll_offset
@@ -376,7 +376,7 @@ def desenhar_topo(fase):
     retangulo(PAL_X2, TOPO_Y, GRADE_X2-PAL_X2, TOPO_H, "painel_esq", raio=0)
     linha(PAL_X2, TOPO_Y, GRADE_X2, TOPO_Y, "grid_borda", 2)
 
-    CX = (PAL_X2+GRADE_X2)//2   # centro horizontal da grade
+    CX = (PAL_X2+GRADE_X2)//2  
 
     # linha 1 — título  (y mais alto = topo)
     txt_c(CX, H-26, fase["titulo"], "destaque", GLUT_BITMAP_HELVETICA_18)
@@ -524,7 +524,7 @@ def iniciar_execucao():
     sucesso = False
     animacao_t = 1.0
 
-    # Expande o programa (REPITA)
+    # Expande o programa 
     expanded = expandir_bloco(programa[:])
     
     # Resolve condicionais
@@ -585,7 +585,7 @@ def mouse_cb(win,button,action,mods):
     if bx<=mx<=bx+bw and by<=my<=by+bh:
         programa.clear(); executando=False; sucesso=False
         robo_pos=fase["robo"]; robo_dir=fase["dir"]; msg=""; msg_timer=0
-        scroll_offset = 0  # Reset scroll
+        scroll_offset = 0  
         return
 
     bx,by,bw,bh=BTN_NEXT
@@ -594,7 +594,7 @@ def mouse_cb(win,button,action,mods):
             fase_atual+=1; programa.clear(); sucesso=False
             nova=FASES[fase_atual]
             robo_pos=nova["robo"]; robo_dir=nova["dir"]; msg=""; msg_timer=0
-            scroll_offset = 0  # Reset scroll
+            scroll_offset = 0  
         return
 
     if not executando:
@@ -638,7 +638,7 @@ def scroll_cb(win, xoffset, yoffset):
     x_area, y_area, w_area, h_area = PROG_SCROLL_AREA
     if x_area <= mx <= x_area + w_area and y_area <= my <= y_area + h_area:
         # Calcula o scroll
-        scroll_step = 38  # Altura de um bloco + espaçamento
+        scroll_step = 38  
         scroll_offset -= yoffset * scroll_step
         
         # Limita o scroll
@@ -660,7 +660,7 @@ def main():
     if not win: glfw.terminate(); sys.exit()
     glfw.make_context_current(win)
     glfw.set_mouse_button_callback(win, mouse_cb)
-    glfw.set_scroll_callback(win, scroll_cb)  # Adiciona callback do scroll
+    glfw.set_scroll_callback(win, scroll_cb) 
     glutInit()
 
     glEnable(GL_BLEND)
